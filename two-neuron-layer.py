@@ -1,7 +1,6 @@
 import random as rnd
 import sys
 import math
-import numpy as np
 
 # The weight is the neural value -- the "knowledge"
 weights =  [rnd.random(), rnd.random()]
@@ -29,6 +28,7 @@ goals = [
     ,1.0
     ,1.0
     # ,0.0
+
     ,0.0
     ,1.0
     ,0.0
@@ -41,9 +41,14 @@ line_num = 0
 
 alpha = 1
 
+# Sigmoid
+def sigmoid(x):
+  return 1 / (1 + math.exp(-x))
+
 # Relaxed rectified linear unit
 def relu(x):
-    return 0 if x <= 0 else x
+    # return 0 if x <= 0 else x
+    return 0.0 if x <= 0.6 else 1.0
 
 def v_sum(v1, v2):
     assert(len(v1) == len(v2))
@@ -51,6 +56,8 @@ def v_sum(v1, v2):
 
     for i in range(len(v1)):
         out += relu( alpha * v1[i] * v2[i] )
+        # out += math.tanh( alpha * v1[i] * v2[i] )
+        # out += sigmoid( alpha * v1[i] * v2[i] )
     return out
 
 def ele_mul(number, vector):
@@ -89,23 +96,23 @@ print("Learned weights: " + str(weights))
 
 # Use the two-neuron network
 
-
+# Predict goals based on inputs differing from training data
 args = [
-     [0.0, 0.0]
-    ,[0.0, 1.0]
-    ,[1.0, 0.0]
+     [0.1, 0.2]
+    ,[0.0, 2.0]
+    ,[8.0, 0.0]
 
-    ,[0.2, 0.4]
-    ,[0.8, 0.1]
-    ,[0.0, 0.1]
-    ,[0.001, 0.01]
-    ,[0.8, 0.2]
-    ,[0.8, 0.0]
+    ,[0.3, 0.6]
+    ,[0.7, 0.1]
+    ,[0.0, 0.2]
+    ,[0.3, 0.1]
+    ,[0.6, 0.1]
+    ,[0.7, 0.0]
 ]
 
 line_num = 0
 for row in range(len(args)):
     prediction = neuron(args[row], weights)
     line_num += 1
-    print(str(line_num) + ". Predicted input value# " + str(args[row]) + ": " + str(prediction) )
+    print(str(line_num) + ". Input value# " + str(args[row]) + " predicts: " + str(prediction) )
 
