@@ -39,7 +39,7 @@ is_learning = True
 for x in range(0, circuit_breaker):
     prediction = neuron(input_value)
 
-    # Learn from error amount and direction here
+    # Learn from error amount and direction
     delta = prediction - goal
     error = delta ** 2
 
@@ -57,4 +57,3 @@ for x in range(0, circuit_breaker):
 
 print("Initial weight: " + str(initial_weight))
 print("Learned weight: " + str(weight))
-# print("Iterations: " + str(iterations));

@@ -1,8 +1,9 @@
 import random as rnd
+import math
 import numpy as np
 
 # The weight is the neural value -- the network's retained "knowledge"
-weights = [0, 0] #[ rnd.random(), rnd.random() ]
+weights = [ rnd.random(), rnd.random() ]
 
 # An N-input neuron
 def neuron(input):
@@ -10,7 +11,7 @@ def neuron(input):
 
     # Custom relaxed rectified linear unit
     def activation(x):
-        return 0.0 if x <= 0.6 else 1.0
+        return math.tanh(x)
 
     def v_sum(v1, v2):
         assert (len(v1) == len(v2))
@@ -41,28 +42,35 @@ def learn(learning_count):
          [0.0, 0.0]
         ,[0.0, 1.0]
         ,[1.0, 0.0]
-        # ,[1.0, 1.0]
 
-        , [0.2, 0.4]
-        , [0.8, 0.1]
-        , [0.0, 0.1]
-        , [0.001, 0.01]
-        , [0.8, 0.2]
-        , [0.8, 0.0]
+        # , [0.2, 0.4]
+        # , [0.8, 0.1]
+        # , [0.0, 0.1]
+        # , [0.001, 0.01]
+        # , [0.8, 0.2]
+        # , [0.2, 0.8]
+        # , [0.8, 0.0]
+        # , [0.1, 0.3]
+        # , [0.35, 0.15]
+        # , [1, 0]
+
     ]
 
     goals = [
          0.0
         ,1.0
         ,1.0
-        # ,0.0
 
-        ,0.0
-        ,1.0
-        ,0.0
-        ,0.0
-        ,1.0
-        ,1.0
+        # ,0.0
+        # ,1.0
+        # ,0.0
+        # ,0.0
+        # ,1.0
+        # ,1.0
+        # ,1.0
+        # ,0.0
+        # ,0.0
+        # ,0
     ]
 
     line_num = 0
@@ -85,36 +93,52 @@ def learn(learning_count):
                 weights[w] -= gradient[w]
 
             line_num += 1
-            print(str(line_num) + ". Predicted input value " + str(inputs[row]) + ": " + str(prediction) + ", goal: " + str(goals[row]))
+            print(str(line_num) + ". Input value " + str(inputs[row]) + " predicts " + str(prediction) + ", for goal: " + str(goals[row]))
         print("")
 
-    print("Learned weights: " + str(weights))
+    print("Learned weights: " + str(weights) + "\n")
 
 # Use the two-neuron network to predict fuzzy "or" result
 def predict( args ):
 
-    # Predict goals based on inputs that could diifer from training data
+    print("Predict goals based on inputs distinct from training data:\n")
 
     line_num = 0
     for row in range(len(args)):
         prediction = neuron(args[row])
         line_num += 1
-        print(str(line_num) + ". Input value# " + str(args[row]) + " predicts: " + str(prediction) )
+        print(str(line_num) + ". Input value# " + str(args[row]) + " predicts: " + str(prediction) + " as "+ str("True" if prediction > 0.5 else "False") )
 
 
-learn( 50 )
+learn( 5 )
 
 predict( [
-         [0.1, 0.2]
-        ,[0.0, 2.0]
-        ,[8.0, 0.0]
+        #  [0.1, 0.2]
+        # ,[0.2, 0.1]
+        #
+        # ,[0.0, 2.0]
+        # ,[8.0, 0.0]
+        #
+        # ,[0.6, 0.3]
+        # ,[0.3, 0.6]
+        #
+        # ,[0.7, 0.1]
+        # ,[0.0, 0.2]
+        #
+        # ,[0.3, 0.1]
+        # ,[0.1, 0.3]
+        #
+        # ,[0.6, 0.1]
+        #
+        # ,[0.0, 0.7]
+        # ,[0.7, 0.0]
+        #
+        # ,[0.09, 0.99]
 
-        ,[0.3, 0.6]
-        ,[0.7, 0.1]
-        ,[0.0, 0.2]
-        ,[0.3, 0.1]
-        ,[0.6, 0.1]
-        ,[0.7, 0.0]
-        ,[0.09, 0.99]
+      [0, 0]
+    , [0, 1]
+    , [1, 0]
+    # , [1, 1]
+
     ])
 
