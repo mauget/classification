@@ -3,7 +3,8 @@ import math
 import numpy as np
 
 # The weight is the neural value -- the network's retained "knowledge"
-weights = [ rnd.random(), rnd.random() ]
+# weights = [ rnd.random(), rnd.random() ]
+weights = [ -99, -99 ]
 
 # An N-input neuron
 def neuron(input):
