@@ -42,7 +42,7 @@ def learn(learning_count):
          [0.0, 0.0]
         ,[0.0, 1.0]
         ,[1.0, 0.0]
-
+        # ,[1.0, 1.0]
         # , [0.2, 0.4]
         # , [0.8, 0.1]
         # , [0.0, 0.1]
@@ -60,7 +60,8 @@ def learn(learning_count):
          0.0
         ,1.0
         ,1.0
-
+        # ,0.0
+        #
         # ,0.0
         # ,1.0
         # ,0.0
@@ -110,7 +111,7 @@ def predict( args ):
         print(str(line_num) + ". Input value# " + str(args[row]) + " predicts: " + str(prediction) + " as "+ str("True" if prediction > 0.5 else "False") )
 
 
-learn( 5 )
+learn( 525 )
 
 predict( [
         #  [0.1, 0.2]
