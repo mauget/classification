@@ -19,7 +19,7 @@ streetlights = np.array(
     ] )
 
 walk_vs_stop = np.array([[ 1, 1, 0, 0]]).T
-alpha = 0.2
+alpha = 0.5
 hidden_size = 4
 
 weights_0_1 = 2*np.random.random((3,hidden_size)) - 1
