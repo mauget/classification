@@ -22,8 +22,8 @@ walk_vs_stop = np.array([[ 1, 1, 0, 0]]).T
 alpha = 0.5
 hidden_size = 4
 
-weights_0_1 = 2*np.random.random((3,hidden_size)) - 1
-weights_1_2 = 2*np.random.random((hidden_size,1)) - 1
+weights_0_1 = 2 * np.random.random((3,hidden_size)) - 1
+weights_1_2 = 2 * np.random.random((hidden_size,1)) - 1
 
 line_num = 0
 
@@ -31,11 +31,10 @@ for iteration in xrange(300):
     layer_2_error = 0
     for i in xrange(len(streetlights)):
         layer_0 = streetlights[i : i+1]
+        layer_1 = relu(np.dot(layer_0, weights_0_1))
+        layer_2 = np.dot(layer_1, weights_1_2)
 
-        layer_1 = relu(np.dot(layer_0,weights_0_1))
-        layer_2 = np.dot(layer_1,weights_1_2)
-
-        layer_2_error += np.sum((layer_2 - walk_vs_stop[i:i+1]) ** 2)
+        layer_2_error += np.sum((layer_2 - walk_vs_stop[i : i+1]) ** 2)
 
         layer_2_delta = (layer_2 - walk_vs_stop[i : i+1])
         layer_1_delta = layer_2_delta.dot(weights_1_2.T) * relu2deriv(layer_1)
