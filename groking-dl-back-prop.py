@@ -34,9 +34,6 @@ for iteration in xrange(300):
     for i in xrange(len(streetlights)):
         layer_0 = streetlights[i : i+1]
 
-        # print( str(np.dot(layer_0, weights_0_1).shape ) )
-        # print( str(layer_0)  )
-
         layer_1 = relu(np.dot(layer_0, weights_0_1))
         layer_2 = np.dot(layer_1, weights_1_2)
 
@@ -47,8 +44,6 @@ for iteration in xrange(300):
 
         weights_1_2 -= alpha * layer_1.T.dot(layer_2_delta)
         weights_0_1 -= alpha * layer_0.T.dot(layer_1_delta)
-
-        # print("\n")
 
     if(iteration % 10 == 9):
         line_num += 10
