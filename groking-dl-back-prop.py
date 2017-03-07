@@ -18,7 +18,12 @@ streetlights = np.array(
      [ 1, 1, 1 ]
     ] )
 
-walk_vs_stop = np.array( [ [1], [1], [0], [0] ] )
+walk_vs_stop = np.array(
+    [[1],
+     [1],
+     [0],
+     [0]
+    ] )
 
 alpha = 0.5
 hidden_size = 4
@@ -41,7 +46,8 @@ for iteration in xrange(300):
         # For logging:
         layer_2_error += np.sum((layer_2 - walk_vs_stop[i : i+1]) ** 2)
 
-        layer_2_delta = (layer_2 - walk_vs_stop[i : i+1])
+        # Diffs -- back-propogate to layer_1_delta
+        layer_2_delta = layer_2 - walk_vs_stop[i : i+1]
         layer_1_delta = layer_2_delta.dot(weights_1_2.T) * relu2deriv(layer_1)
 
         # Seek lowest error
