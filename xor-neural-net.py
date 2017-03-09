@@ -28,7 +28,7 @@ inputs = np.array(
      [ 1, 1 ]
     ] )
 
-# ... predict their fuzzy XOR meanings, row-for-row. Values > 0.5  mean true
+# ... predict these target fuzzy XOR meanings, row-for-row. Values > 0.5  mean true
 predictions = np.array(
     [[0],
      [1],

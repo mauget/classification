@@ -1,50 +1,37 @@
 import random
-import math
-import numpy as np
 
-# The weight is the neural value -- the "knowledge"
-weight = random.random() * 10
-
+# This weight is the neural value; the "knowledge"
+# At first we know nuthin'
+weight = -random.random() * 2
 initial_weight = weight
-counter = 0
 
-# We want a neuron to predict a value 0f 0.8 for an input of 0.5
+# We seek a neuron that predicts a value 0f 0.8 for an input of 0.5
 goal = 0.8
+# This the hello-world demo. Most neurons  take an array of inputs instead of a scalar.
 input_value = 0.5
 
-fuzz = 1e-25 #1e-10
+fuzz = 1e-25
 
-# # Sigmoid
-# def sigmoid(x):
-#   return 1 / (1 + math.exp(-x))
+# Input-to-output result non-linear if neuron were to cascade to a hidden laryer
+def activate(x):
+    return max(0, x)
 
-# Relaxed rectified linear unit
-def relu(x):
-    return 0 if x <= 0 else x
-
-# This is a single-input neuron!
+# This is the actual single-input neuron.
 def neuron(input):
-    alpha = 3
-
-    # prediction = sigmoid(alpha * weight * input)
-    # prediction = math.tanh(alpha * weight * input)
-    prediction = relu(alpha * weight * input)
-    # prediction = relu(alpha * np.array([input]).dot(np.array([weight])))
-
-    return prediction
+    return activate(weight * input)
 
 # "Supervised" learning:
+counter = 0
 circuit_breaker = int(1e5)
-is_learning = True
+
 for x in range(0, circuit_breaker):
     prediction = neuron(input_value)
 
-    # Learn from error amount and direction
     delta = prediction - goal
     error = delta ** 2
 
-    gradient = delta * input_value
-    weight -= gradient
+    # Adjust weight from error amount and sign of error
+    weight -= delta * input_value
 
     counter += 1
     print(str(counter) + ". Prediction: " + str(prediction) + ", goal: " + str(goal))
@@ -52,7 +39,6 @@ for x in range(0, circuit_breaker):
     circuit_breaker = circuit_breaker -1
     if error < fuzz:
         break
-
 
 
 print("Initial weight: " + str(initial_weight))
