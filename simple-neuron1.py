@@ -3,7 +3,7 @@ import random
 # This signed weight is the neural value -- the "knowledge"
 # At first we're Sgt Shultz: we know n0-thing!
 sign = 1 if (random.random() > 0.5) else -1
-weight = 1e3 * random.random() * sign
+weight = 10000 * random.random() * sign
 
 initial_weight = weight
 
@@ -26,9 +26,9 @@ circuit_breaker = int(1e5)
 for x in range(circuit_breaker):
     prediction = neuron(input_value)
 
-    # Adjust weight using value of delta slope and sign
-    delta = prediction - goal
-    correction = delta * input_value
+    # Adjust weight using diff slope and sign
+    diff = prediction - goal
+    correction = diff * input_value
     weight -= correction
 
     counter += 1
