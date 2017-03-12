@@ -1,30 +1,30 @@
 import random as rnd
-import math
 import numpy as np
 
 # The weight is the neural value -- the network's retained "knowledge"
-# weights = [ rnd.random(), rnd.random() ]
-weights = [ -99, -99 ]
+# weights = [ 1 * rnd.random(), 1 *rnd.random() ]
+weights = [ 2000 * rnd.random(), 2000 *rnd.random() ]
+# weights = [ -99, -99 ]
 
 # An N-input neuron
 def neuron(input):
-    alpha = 3
+    alpha = 0.1 #3
 
-    # Custom relaxed rectified linear unit
-    def activation(x):
-        return math.tanh(x)
+    def activate(x):
+        # return math.tanh(x)
+        # return (x > 0) * x
+        return x
 
     def v_sum(v1, v2):
         assert (len(v1) == len(v2))
-        out = 0
 
-        out = activation(np.dot(alpha * np.array(v1), np.array(v2)))
+        out = activate(alpha * np.array(v1).dot.array(v2))
 
-        out2 = 0
-        for i in range(len(v1)):
-            out2 += activation(alpha * v1[i] * v2[i])
+        # out2 = 0
+        # for i in range(len(v1)):
+        #     out2 += activate(alpha * v1[i] * v2[i])
         # assert( out == out2)
-        return out2
+        return out
 
     out = v_sum(input, weights)
     return out
@@ -43,36 +43,19 @@ def learn(learning_count):
          [0.0, 0.0]
         ,[0.0, 1.0]
         ,[1.0, 0.0]
-        # ,[1.0, 1.0]
-        # , [0.2, 0.4]
-        # , [0.8, 0.1]
-        # , [0.0, 0.1]
-        # , [0.001, 0.01]
-        # , [0.8, 0.2]
-        # , [0.2, 0.8]
-        # , [0.8, 0.0]
-        # , [0.1, 0.3]
-        # , [0.35, 0.15]
-        # , [1, 0]
-
+        ,[1.0, 1.0]
     ]
 
     goals = [
+        #  0.0
+        # ,0.0
+        # ,0.0
+        # ,1.0
+
          0.0
         ,1.0
         ,1.0
-        # ,0.0
-        #
-        # ,0.0
-        # ,1.0
-        # ,0.0
-        # ,0.0
-        # ,1.0
-        # ,1.0
-        # ,1.0
-        # ,0.0
-        # ,0.0
-        # ,0
+        ,0.0
     ]
 
     line_num = 0
@@ -112,35 +95,13 @@ def predict( args ):
         print(str(line_num) + ". Input value# " + str(args[row]) + " predicts: " + str(prediction) + " as "+ str("True" if prediction > 0.5 else "False") )
 
 
-learn( 525 )
+learn( 500 )
 
 predict( [
-        #  [0.1, 0.2]
-        # ,[0.2, 0.1]
-        #
-        # ,[0.0, 2.0]
-        # ,[8.0, 0.0]
-        #
-        # ,[0.6, 0.3]
-        # ,[0.3, 0.6]
-        #
-        # ,[0.7, 0.1]
-        # ,[0.0, 0.2]
-        #
-        # ,[0.3, 0.1]
-        # ,[0.1, 0.3]
-        #
-        # ,[0.6, 0.1]
-        #
-        # ,[0.0, 0.7]
-        # ,[0.7, 0.0]
-        #
-        # ,[0.09, 0.99]
-
       [0, 0]
     , [0, 1]
     , [1, 0]
-    # , [1, 1]
+    , [1, 1]
 
     ])
 

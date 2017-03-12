@@ -1,24 +1,21 @@
 import random
 
-# This weight is the neural value; the "knowledge"
-# At first we know nuthin'
-weight = -random.random() * 2
+# This weight is the neural value -- the "knowledge"
+# At first we're Sgt Shultz: we know nuthing!
+weight = 300 * random.random()
 initial_weight = weight
 
 # We seek a neuron that predicts a value 0f 0.8 for an input of 0.5
 goal = 0.8
-# This the hello-world demo. Most neurons  take an array of inputs instead of a scalar.
+
+# It's a demo! Most neurons take an input array instead of a scalar.
 input_value = 0.5
 
-fuzz = 1e-25
-
-# Input-to-output result non-linear if neuron were to cascade to a hidden laryer
-def activate(x):
-    return max(0, x)
+diff_fuzz = 1e-25
 
 # This is the actual single-input neuron.
 def neuron(input):
-    return activate(weight * input)
+    return weight * input
 
 # "Supervised" learning:
 counter = 0
@@ -27,17 +24,16 @@ circuit_breaker = int(1e5)
 for x in range(0, circuit_breaker):
     prediction = neuron(input_value)
 
+    # Adjust weight from delta slope magnitube and sign
     delta = prediction - goal
-    error = delta ** 2
-
-    # Adjust weight from error amount and sign of error
     weight -= delta * input_value
 
     counter += 1
-    print(str(counter) + ". Prediction: " + str(prediction) + ", goal: " + str(goal))
+    print(str(counter) + ". Prediction " + str(prediction) + " via weight " + str(weight) + ". Seeking goal " + str(goal))
 
-    circuit_breaker = circuit_breaker -1
-    if error < fuzz:
+    circuit_breaker -= 1
+    error = delta ** 2
+    if error < diff_fuzz:
         break
 
 
