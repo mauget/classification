@@ -63,7 +63,7 @@ def learn(learning_count):
     print("Initial weight:s " + str(weights))
     print("Number of inputs: " + str(len(inputs)))
 
-    # Supervised learning loop -- adjusts weights to yield the predictions
+    # Supervised learning loop -- adjusts weights to yield the goals
     for x in range(learning_count):
 
         for row in range(len(inputs)):
@@ -86,7 +86,7 @@ def learn(learning_count):
 # Use the two-neuron network to predict fuzzy "or" result
 def predict( args ):
 
-    print("Predict predictions based on inputs distinct from training data:\n")
+    print("Predict goals based on inputs distinct from training data:\n")
 
     line_num = 0
     for row in range(len(args)):

@@ -35,7 +35,7 @@ for x in range(circuit_breaker):
     print(str(counter) + ". Prediction " + str(prediction) + " using weight " + str(weight) + ". Seeking goal " + str(goal))
 
     circuit_breaker -= 1
-    if delta ** 2 < diff_fuzz:
+    if diff ** 2 < diff_fuzz:
         break
 
 

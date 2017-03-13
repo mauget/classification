@@ -29,12 +29,27 @@ inputs = np.array(
     ] )
 
 # ... predict these target fuzzy XOR meanings, row-for-row. Values > 0.5  mean true
-predictions = np.array(
+goals = np.array(
+    # XOR
     [[0],
      [1],
      [1],
      [0]
     ] )
+
+    # AND
+    # [[0],
+    #  [0],
+    #  [0],
+    #  [1]
+    # ] )
+
+    # OR
+    # [[0],
+    #  [1],
+    #  [1],
+    #  [1]
+    # ] )
 
 hidden_size = inputs.shape[0]  # 4 rows of input. i.e. the number of  neurons in the single hidden layer
 input_size  = inputs.shape[1]  # 2 cols of input. i.e. the number of items in an input row
@@ -49,7 +64,7 @@ def logKnowledge():
     print( "\nHidden weights: " )
     print(  weights_1_2)
     print( "\nPredictions: ")
-    print( predictions)
+    print(goals)
     print("")
 
 print("\nRandomized input weights follow ...")
@@ -68,13 +83,10 @@ for iteration in xrange(learniing_cycles):
     for i in xrange(len(inputs)):
 
         # The sigmoid function makes the model non-linear.
-        # Otherwise the multiplications of succesive layrs could be carried out in one layer ... to no gooo effect.
+        # Otherwise the multiplications of succesive layers could be carried out in one layer ... to no advantage.
         layer_0 = inputs[i : i + 1]
         layer_1 = sigmoid(np.dot(layer_0, weights_0_1))
         layer_2 = np.dot(layer_1, weights_1_2)
-
-        # Error for logging:
-        # layer_2_error += np.sum((layer_2 - predictions[i : i + 1]))
 
         # layer_2 is the prediction layer.
         # Teach it incrementally by correcting weight values and directions
@@ -84,7 +96,7 @@ for iteration in xrange(learniing_cycles):
         # contribution.
 
         # Error diffs -- back-propagate to layer_1_delta
-        layer_2_delta = layer_2 - predictions[i]
+        layer_2_delta = layer_2 - goals[i]
         layer_1_delta = layer_2_delta.dot(weights_1_2.T) * sigmoidDeriv(layer_1)
 
         # Forward-propagate lowest error
