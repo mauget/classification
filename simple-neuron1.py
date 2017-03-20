@@ -1,5 +1,4 @@
 import random
-import math
 
 # This signed weight is the neural value -- the "knowledge"
 # At first we're Sgt Shultz: we know no-thing!
