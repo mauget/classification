@@ -1,7 +1,8 @@
 import random
+import math
 
 # This signed weight is the neural value -- the "knowledge"
-# At first we're Sgt Shultz: we know n0-thing!
+# At first we're Sgt Shultz: we know no-thing!
 sign = 1 if (random.random() > 0.5) else -1
 weight = 10000 * random.random() * sign
 
@@ -23,7 +24,7 @@ def neuron(input):
 counter = 0
 circuit_breaker = int(1e5)
 
-for x in range(circuit_breaker):
+for x in xrange(circuit_breaker):
     prediction = neuron(input_value)
 
     # Adjust weight using diff slope and sign
@@ -41,3 +42,11 @@ for x in range(circuit_breaker):
 
 print("Initial weight: " + str(initial_weight))
 print("Learned weight: " + str(weight))
+
+print ("\nUse it: request outputs as function of fuzzy neural inputs")
+counter = 0
+vals = (0.480, 0.485, 0.490, 0.495, 0.500, 0.550, 0.510, 0.515)
+for x in xrange(0, len(vals)):
+    counter += 1
+    input = vals[x]
+    print( str(counter) + ". Prediction " + str(neuron(input)) + " from input " + str(input) )
