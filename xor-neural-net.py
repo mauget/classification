@@ -3,6 +3,7 @@ import numpy as np
 
 learniing_cycles = 300  # Number of "lessons"
 alpha = 0.5             # Like a step size. Empirically-set dampening for error correction
+bias = -0.001
 
 np.random.seed(1)
 
@@ -15,6 +16,36 @@ def sigmoid(x):
 def sigmoidDeriv(x):
     sm = sigmoid(x)
     return sm * (1.0 - sm)
+
+def tanhDeriv(x):
+    return 1.0 - tanh(x) ** 2
+
+def tanh(x):
+    return np.tanh(x)
+
+def reluDeriv(x):
+    return (x > 0) * 1
+
+def relu(x):
+    return (x > 0) * x
+
+def heavisideDeriv(x):
+    return (abs(x) < 0.1) * 1
+
+def heaviside(x):
+    return (abs(x) >= 0 ) * 1
+
+def activation(x):
+    # return heaviside(x)
+    # return relu(x)
+    # return sigmoid(x)
+    return tanh(x)
+
+def activationDeriv(x):
+    # return heavisideDeriv(x)
+    # return reluDeriv(x)
+    # return sigmoidDeriv(x)
+    return tanhDeriv(x)
 
 # Param is an int
 def shouldLogNow(line_no):
@@ -85,7 +116,7 @@ for iteration in xrange(learniing_cycles):
         # The sigmoid function makes the model non-linear.
         # Otherwise the multiplications of succesive layers could be carried out in one layer ... to no advantage.
         layer_0 = inputs[i : i + 1]
-        layer_1 = sigmoid(np.dot(layer_0, weights_0_1))
+        layer_1 = activation(np.dot(layer_0, weights_0_1) + bias)
         layer_2 = np.dot(layer_1, weights_1_2)
 
         # layer_2 is the prediction layer.
@@ -97,7 +128,7 @@ for iteration in xrange(learniing_cycles):
 
         # Error diffs -- back-propagate to layer_1_delta
         layer_2_delta = layer_2 - goals[i]
-        layer_1_delta = layer_2_delta.dot(weights_1_2.T) * sigmoidDeriv(layer_1)
+        layer_1_delta = layer_2_delta.dot(weights_1_2.T) * activationDeriv(layer_1)
 
         # Forward-propagate lowest error
         weights_1_2 -= alpha * layer_1.T.dot(layer_2_delta)
